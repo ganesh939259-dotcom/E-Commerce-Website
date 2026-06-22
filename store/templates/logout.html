@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Logged Out</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),
+    url("{% static 'images/background-image.jpg' %}");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.logout-box{
+    width:500px;
+    text-align:center;
+    padding:50px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+
+    border-radius:20px;
+    color:white;
+}
+
+.logout-box i{
+    font-size:70px;
+    color:#28a745;
+    margin-bottom:20px;
+}
+
+.logout-box h2{
+    margin-bottom:15px;
+}
+
+.logout-box p{
+    margin-bottom:25px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 25px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+    margin:5px;
+}
+
+.login-btn{
+    background:#007bff;
+}
+
+.home-btn{
+    background:#ff6b3d;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="logout-box">
+
+    <i class="fas fa-check-circle"></i>
+
+    <h2>Logged Out Successfully</h2>
+
+    <p>Thank you for visiting TrendMart.</p>
+
+    <a href="{% url 'accounts:login' %}" class="btn login-btn">
+        Login Again
+    </a>
+
+    <a href="{% url 'store:home' %}" class="btn home-btn">
+        Go Home
+    </a>
+
+</div>
+
+</body>
+</html>
