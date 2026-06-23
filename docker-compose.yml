@@ -10,7 +10,7 @@ services:
       - "8000"
 
 
-   nginx:
+  nginx:
     image: nginx:latest
     container_name: nginx-server
     ports:
