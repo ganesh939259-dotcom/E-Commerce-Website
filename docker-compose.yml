@@ -9,17 +9,13 @@ services:
     expose:
       - "8000"
 
-
   nginx:
     image: nginx:latest
     container_name: nginx-server
     ports:
       - "80:80"
-
     volumes:
       - ./Ecommerce/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./media:/app/media
-      - ./static:/app/static
-
+      - .:/app
     depends_on:
       - web
