@@ -148,7 +148,7 @@ def checkout(request):
 
     send_mail(
         'Order Confirmation',
-        'Test Email Working',
+        'your order is successfully delievered',
         'ganesh939259@gmail.com',
         ['nangiliganesh210@gmail.com'],
         fail_silently=False,
