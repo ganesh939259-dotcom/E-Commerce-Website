@@ -10,14 +10,16 @@ services:
       - "8000"
 
 
-  nginx:
+   nginx:
     image: nginx:latest
     container_name: nginx-server
     ports:
       - "80:80"
 
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./Ecommerce/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./media:/app/media
+      - ./static:/app/static
 
     depends_on:
       - web
