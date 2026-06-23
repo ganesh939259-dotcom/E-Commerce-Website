@@ -8,6 +8,10 @@ from .views import (
     checkout,
     order_history,
     delete_product,
+    payment,
+    product_detail,
+    add_review,
+    
 )
 
 app_name = 'store'
@@ -24,6 +28,22 @@ urlpatterns = [
     'delete-product/<int:product_id>/',
     delete_product,
     name='delete_product'
+),
+path(
+    'payment/',
+    payment,
+    name='payment'
+),
+path(
+    'product/<int:product_id>/',
+    product_detail,
+    name='product_detail'
+
+),
+path(
+    'review/<int:product_id>/',
+    add_review,
+    name='add_review'
 ),
     
 ]

@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     # your apps
     'store',
     'accounts',
+    
 ]
 
 MIDDLEWARE = [
@@ -96,3 +97,16 @@ LOGIN_URL = '/accounts/login/'
 
 # Default primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RAZORPAY_KEY_ID = "rzp_test_xxxxxxxxx"
+RAZORPAY_KEY_SECRET = "xxxxxxxxxxxxx"
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'ganesh939259@gmail.com'
+EMAIL_HOST_PASSWORD = 'eqxrwvnlyolishwx'

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product, Cart, Order,Category
+from .models import Product, Cart, Order,Category,Review
 from django.db.models import Q
+from django.core.mail import send_mail
 
 def home(request):
     query = request.GET.get('q')
@@ -124,8 +125,12 @@ def order_history(request):
         'order_history.html',
         {'orders': orders}
     )
+
+
 @login_required
 def checkout(request):
+
+    print("CHECKOUT CALLED")
 
     cart_items = Cart.objects.filter(user=request.user)
 
@@ -134,10 +139,22 @@ def checkout(request):
         for item in cart_items
     )
 
-    Order.objects.create(
+    order = Order.objects.create(
         user=request.user,
         total_price=total
     )
+
+    print("BEFORE EMAIL")
+
+    send_mail(
+        'Order Confirmation',
+        'Test Email Working',
+        'ganesh939259@gmail.com',
+        ['nangiliganesh210@gmail.com'],
+        fail_silently=False,
+    )
+
+    print("AFTER EMAIL")
 
     cart_items.delete()
 
@@ -147,3 +164,88 @@ def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product.delete()
     return redirect('store:home')
+
+import razorpay
+from django.conf import settings
+from django.shortcuts import render
+
+@login_required
+def payment(request):
+
+    cart_items = Cart.objects.filter(user=request.user)
+
+    total = sum(
+        item.product.price * item.quantity
+        for item in cart_items
+    )
+
+    amount = int(total * 100)
+
+    client = razorpay.Client(
+        auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET
+        )
+    )
+
+    payment = client.order.create({
+        "amount": amount,
+        "currency": "INR",
+        "payment_capture": "1"
+    })
+
+    return render(
+        request,
+        "payment.html",
+        {
+            "payment": payment,
+            "amount": amount,
+            "key": settings.RAZORPAY_KEY_ID
+        }
+    )
+@login_required
+def add_review(request, product_id):
+
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == "POST":
+
+        rating = request.POST.get("rating")
+        comment = request.POST.get("comment")
+
+        existing_review = Review.objects.filter(
+            product=product,
+            user=request.user
+        ).first()
+
+        if not existing_review:
+            Review.objects.create(
+                product=product,
+                user=request.user,
+                rating=rating,
+                comment=comment
+            )
+
+    return redirect(
+        'store:product_detail',
+        product_id=product.id
+    )
+def product_detail(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id
+    )
+
+    reviews = Review.objects.filter(
+        product=product
+    )
+
+    return render(
+        request,
+        'product_details.html',
+        {
+            'product': product,
+            'reviews': reviews
+        }
+    )
