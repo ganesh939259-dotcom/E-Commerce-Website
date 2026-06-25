@@ -3,7 +3,6 @@ services:
   web:
     build: .
     restart: always
-    container_name: ecommerce-app
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
@@ -13,7 +12,6 @@ services:
   nginx:
     image: nginx:latest
     restart: always
-    container_name: nginx-server
     ports:
       - "80:80"
     volumes:
