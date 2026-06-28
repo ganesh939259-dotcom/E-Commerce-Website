@@ -180,7 +180,7 @@ docker run -d -p 8000:8000 ecommerce-app
 
 ## Live Demo
 
-🌐 Live Application: http://3.109.137.208/
+🌐 Live Application: http://65.1.210.204/
 🌐 Live Application admin :https://127.0.0.1:8000/
 
 ## Source Code
